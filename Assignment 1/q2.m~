@@ -1,0 +1,6 @@
+time = 1/360:1/360:5;
+time2 = 20/36:1/360;25;
+signal_to_five = val(1:5 * 360) / 200;
+signal_to_twentyFive = val(20:25 * 360) / 200;
+plot(time, signal_to_five);
+plot(time2, signal_to_twentyFive);
