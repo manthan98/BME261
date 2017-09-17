@@ -1,9 +1,8 @@
 function indices = findT( val )
-%UNTITLED2 Summary of this function goes here
-%   Detailed explanation goes here
+% returns indices of peak locations.
 
     [peaks, peakLocs] = findpeaks(val, 'MinPeakWidth', 30);
-    indices = peakLocs
+    indices = peakLocs;
 
 end
 
