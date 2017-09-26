@@ -9,7 +9,7 @@ featureA_T = ecg(peakIndices(peakLabels==3));
 
 % Feature B - calculate the widths.
 widths = [];
-for i = 1:156
+for i = 1:length(peakIndices)
     for j = peakIndices(i):length(ecg)
         scan_right = ecg(j+1) - ecg(j);
         if scan_right > 0
