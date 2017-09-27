@@ -26,7 +26,8 @@ classdef KNN < handle
             
             votes_tie = sort([sum(votes==1), sum(votes==2), sum(votes==3)]);
             
-            if all(votes_tie == votes_tie(1))
+            % Check for ties.
+            if length(votes_tie) ~= length(unique(votes_tie))
                 k = 1;
                 differences = knn.features - repmat(features, 1, size(knn.features, 2));
                 distances = sum(differences.^2, 1).^.5; [~,ind] = sort(distances, 2, 'ascend');
