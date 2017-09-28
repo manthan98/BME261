@@ -41,8 +41,8 @@ plot(featureA_QRS, featureB_QRS, 'rx');
 plot(featureA_P, featureB_P, 'bx');
 plot(featureA_T, featureB_T, 'gx');
 
-featureA = horzcat(featureA_QRS', featureA_P', featureA_T');
-featureB = horzcat(featureB_QRS, featureB_P, featureB_T);
+featureA = ecg(peakIndices)';
+featureB = widths;
 
 knn = KNN([featureA/std(featureA); featureB/std(featureB)], peakLabels);
 plotRegions(knn, 3);

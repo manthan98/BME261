@@ -24,18 +24,13 @@ classdef KNN < handle
             [~,ind] = sort(distances, 2, 'ascend');
             votes = knn.labels(ind(1:k));
             
-            votes_tie = sort([sum(votes==1), sum(votes==2), sum(votes==3)]);
-            
             % Check for ties.
-            if length(votes_tie) ~= length(unique(votes_tie))
-                k = 1;
-                differences = knn.features - repmat(features, 1, size(knn.features, 2));
-                distances = sum(differences.^2, 1).^.5; [~,ind] = sort(distances, 2, 'ascend');
-                votes = knn.labels(ind(1:k));
+            if length(votes) ~= length(unique(votes))
+                result = votes(1);
+            else
                 result = mode(votes);
             end
             
-            result = mode(votes);
         end
         
         function plotRegions(knn, k)
