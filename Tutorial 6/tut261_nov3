@@ -1,0 +1,41 @@
+#include <Servo.h>
+
+Servo motor;
+int pos = 0;
+
+int dim = 5;
+int bright = 0;
+bool inc = true;
+
+void setup() {
+  // put your setup code here, to run once:
+  //pinMode(9, OUTPUT);
+  Serial.begin(9600);
+  motor.attach(9);
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  //if (bright == 255) inc = false;
+  //else if (bright == 0) inc = true;
+  
+  //if (inc) bright += dim;
+  //else bright -= dim;
+
+  //analogWrite(9, bright);
+
+  
+  pos = Serial.parseInt();
+  //if (pos == 180) inc = false;
+  //else if (pos == 0) inc = true;
+  
+  //if (inc) pos += 10;
+  //else pos -= 10;
+
+  motor.write(pos);
+  
+  delay(50);
+
+
+  // The capacitor stores charge; this smooths out the voltage across the motor
+}
