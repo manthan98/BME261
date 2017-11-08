@@ -1,14 +1,22 @@
 Servo servo;
-int tempSensor = 0;
+const int tempSensor = 3;
+const int plusBtnPin = 4;
+const int minusBtnPin = 7;
+const int servoPin = 9;
+int userTemp = 20; // Temperature that user can control, arbitrary start point.
+bool closed = false; // Vent closed by the servo.
 
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
-  servo.attach(9);
+  servo.attach(servoPin);
+  pinMode(plusBtnPin, INPUT);
+  pinMode(minusBtnPin, INPUT);
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  plusBtnState = digitalRead(plusBtnPin);
+  minusBtnState = digitalRead(minusBtnPin);
 
   // Get the voltage reading from sensor.
   int temp = analogRead(tempSensor);
@@ -20,14 +28,38 @@ void loop() {
   // Temperature conversion
   float tempC = (voltage - 0.5) * 100;
 
-  if(tempC >= 20)
+  if(plusBtnState == HIGH)
   {
-    // Close.
-    servo.write(0);
-  } else 
+    userTemp += 1;
+    if(userTemp >= 20)
+    {
+      servo.write(0); // Close.
+    }
+  }
+
+  if(minusBtnState == HIGH)
   {
-    // Open.
-    servo.write(180);
+    userTemp -= 1;
+    if(userTemp < 20)
+    {
+      servo.write(180); // Open.
+    }
+  }
+
+  if(userTemp >= tempC)
+  {
+    if(!closed)
+    {
+      servo.write(180); // Open.
+      closed = true;
+    }
+  } else if(userBtn < tempC)
+  {
+    if(!closed)
+    {
+      servo.write(180); // Close.
+      closed = true;
+    }
   }
 
   delay(2000); // 2 sec.
